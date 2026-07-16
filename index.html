@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Responsive Layout | Header · Content · Footer</title>
+    <style>
+        /* ---------- GLOBAL RESET & BASE STYLES ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* CSS Custom Properties for consistent theming and easy adjustments */
+        :root {
+            --primary-color: #2c3e66;
+            --secondary-color: #f4f7fc;
+            --accent-color: #e67e22;
+            --text-dark: #1e2a3a;
+            --text-light: #ffffff;
+            --card-bg: #ffffff;
+            --footer-bg: #1a2a3a;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+            --transition-default: all 0.25s ease-in-out;
+        }
+
+        body {
+            font-family: system-ui, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            background-color: #eef2f5;
+            color: var(--text-dark);
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* main wrapper to push footer down (flex column layout) */
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        /* ---------- TYPOGRAPHY & UTILITY ---------- */
+        h1, h2, h3 {
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
+        }
+
+        /* ---------- HEADER STYLES (fully responsive) ---------- */
+        .site-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1f3a5f 100%);
+            color: var(--text-light);
+            box-shadow: var(--shadow-md);
+            position: relative;
+            z-index: 10;
+        }
+
+        .header-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 24px;
+            gap: 1rem;
+        }
+
+        .logo-area h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .logo-area p {
+            font-size: 0.85rem;
+            opacity: 0.85;
+            margin-top: 4px;
+        }
+
+        /* navigation menu */
+        .main-nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            list-style: none;
+        }
+
+        .main-nav a {
+            font-weight: 500;
+            padding: 0.5rem 0;
+            transition: var(--transition-default);
+            border-bottom: 2px solid transparent;
+        }
+
+        .main-nav a:hover {
+            border-bottom-color: var(--accent-color);
+            color: #ffddb0;
+        }
+
+        /* ---------- HERO SECTION (structured content block) ---------- */
+        .hero {
+            background: var(--secondary-color);
+            padding: 3rem 0 3.5rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+
+        .hero-content h2 {
+            font-size: 2.4rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            transition: var(--transition-default);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            background-color: #cf711f;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ---------- MAIN CONTENT LAYOUT (cards / grid / structured) ---------- */
+        .main-content {
+            padding: 3rem 0;
+            flex: 1;
+        }
+
+        /* Section title */
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .section-title span {
+            background: linear-gradient(120deg, var(--accent-color), #f39c12);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        /* responsive card grid — flexible structured layout */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-default);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-img {
+            background-color: #d9e2ec;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--primary-color);
+            background: linear-gradient(145deg, #e9edf2, #dee4ea);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            flex: 1;
+        }
+
+        .card-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary-color);
+        }
+
+        .card-content p {
+            color: #3a4a5c;
+            margin-bottom: 1.2rem;
+        }
+
+        .card-meta {
+            font-size: 0.85rem;
+            color: #6c7a89;
+            border-top: 1px solid #ecf0f1;
+            padding-top: 0.8rem;
+            margin-top: auto;
+        }
+
+        /* Two column structured info block (additional layout) */
+        .info-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 3rem 0 1rem;
+            background: #ffffffd9;
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .info-col {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .info-col h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-col p {
+            color: #2c3e50;
+        }
+
+        /* ---------- FOOTER STYLES (responsive, clean) ---------- */
+        .site-footer {
+            background-color: var(--footer-bg);
+            color: #cbd5e1;
+            padding: 2.5rem 0 1.5rem;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+        }
+
+        .footer-links-column h4 {
+            color: white;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-links-column ul {
+            list-style: none;
+        }
+
+        .footer-links-column li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links-column a {
+            transition: var(--transition-default);
+            opacity: 0.8;
+        }
+
+        .footer-links-column a:hover {
+            opacity: 1;
+            color: var(--accent-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.85rem;
+        }
+
+        /* ---------- MEDIA QUERIES (responsive behavior) ---------- */
+        /* Tablet and small desktop adjustments */
+        @media (max-width: 992px) {
+            .container {
+                padding: 0 20px;
+            }
+            .hero-content h2 {
+                font-size: 2rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .info-row {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+
+        /* Mobile-first refinement: header & navigation stacking */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .main-nav ul {
+                justify-content: center;
+                gap: 1.2rem;
+                flex-wrap: wrap;
+            }
+
+            .hero {
+                padding: 2rem 0 2.5rem;
+            }
+
+            .hero-content h2 {
+                font-size: 1.8rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .footer-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-links {
+                justify-content: center;
+                text-align: center;
+                gap: 1.8rem;
+            }
+
+            .footer-brand {
+                text-align: center;
+            }
+
+            .info-col {
+                text-align: center;
+            }
+            .info-col h3 {
+                justify-content: center;
+            }
+        }
+
+        /* Extra small devices (<=480px) fine tuning */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+            .btn {
+                padding: 0.6rem 1.4rem;
+                font-size: 0.9rem;
+            }
+            .card-content h3 {
+                font-size: 1.3rem;
+            }
+            .logo-area h1 {
+                font-size: 1.5rem;
+            }
+            .main-nav a {
+                font-size: 0.9rem;
+            }
+            .footer-links {
+                flex-direction: column;
+                gap: 1.2rem;
+            }
+        }
+
+        /* accessibility & focus */
+        a:focus-visible, button:focus-visible, .btn:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="page-wrapper">
+    <!-- ================= HEADER SECTION ================= -->
+    <header class="site-header">
+        <div class="header-container container">
+            <div class="logo-area">
+                <h1>🌿 EcoSphere</h1>
+                <p>sustainable · future · design</p>
+            </div>
+            <nav class="main-nav" aria-label="Main navigation">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Solutions</a></li>
+                    <li><a href="#">Impact</a></li>
+                    <li><a href="#">Insights</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ================= HERO SECTION (structured) ================= -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h2>Designing a resilient tomorrow</h2>
+            <p>Responsive layouts that adapt to any device — from mobile phones to ultra-wide screens. Clean HTML/CSS, modern flex & grid, and smart media queries.</p>
+            <a href="#" class="btn" aria-label="Explore our services">Explore solutions →</a>
+        </div>
+    </section>
+
+    <!-- ================= MAIN CONTENT (structured layout) ================= -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Card grid section: structured content blocks -->
+            <div class="section-title">
+                <h2>✨ <span>Key Focus Areas</span> ✨</h2>
+            </div>
+            <div class="cards-grid">
+                <!-- card 1 -->
+                <article class="card">
+                    <div class="card-img">🌱</div>
+                    <div class="card-content">
+                        <h3>Regenerative design</h3>
+                        <p>Holistic approaches that restore natural systems while creating functional, beautiful spaces and digital experiences.</p>
+                        <div class="card-meta">📘 12 case studies</div>
+                    </div>
+                </article>
+                <!-- card 2 -->
+                <article class="card">
+                    <div class="card-img">📱</div>
+                    <div class="card-content">
+                        <h3>Responsive framework</h3>
+                        <p>Fluid grids, flexible images, and media queries ensure pixel-perfect layouts on any viewport — from 320px to 4K.</p>
+                        <div class="card-meta">⚡ optimized performance</div>
+                    </div>
+                </article>
+                <!-- card 3 -->
+                <article class="card">
+                    <div class="card-img">♻️</div>
+                    <div class="card-content">
+                        <h3>Circular economy</h3>
+                        <p>Reduce waste, extend lifecycles, and design for disassembly. Our principles align with sustainable development goals.</p>
+                        <div class="card-meta">🌍 carbon neutral 2025</div>
+                    </div>
+                </article>
+                <!-- card 4 -->
+                <article class="card">
+                    <div class="card-img">🎨</div>
+                    <div class="card-content">
+                        <h3>Adaptive UI/UX</h3>
+                        <p>Seamless experiences from desktop to mobile, with touch-friendly navigation and readable typography out of the box.</p>
+                        <div class="card-meta">🔍 WCAG 2.1 ready</div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- additional structured two-column content block -->
+            <div class="info-row">
+                <div class="info-col">
+                    <h3>📊 Data-driven approach</h3>
+                    <p>We combine user-centric design with analytics to craft responsive experiences that engage and convert. Our metrics show 40% better retention on mobile-first layouts.</p>
+                </div>
+                <div class="info-col">
+                    <h3>⚙️ CSS Grid + Flexbox</h3>
+                    <p>This layout uses modern CSS techniques: flexible cards grid, media query breakpoints (768px, 992px, 480px), and a sticky footer pattern — all without frameworks.</p>
+                </div>
+                <div class="info-col">
+                    <h3>📱 Mobile-first mindset</h3>
+                    <p>Starting from smallest screens upwards, every component stacks elegantly, then reconfigures for tablets and desktops using progressive enhancement.</p>
+                </div>
+            </div>
+
+            <!-- extra structured testimonial / quote block to show content variety -->
+            <div style="background: #fef9e8; border-radius: 28px; padding: 1.8rem; margin: 2rem 0 1rem; text-align: center; border-left: 6px solid var(--accent-color);">
+                <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 0.5rem;">“Responsive web design isn’t just about resizing — it’s about rethinking content hierarchy for every device. This demo shows how header, footer, and main content adapt gracefully.”</p>
+                <p style="font-weight: 600;">— Design System Team</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- ================= FOOTER SECTION ================= -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-brand">
+                    <h3>🌍 EcoSphere</h3>
+                    <p>Building adaptive & inclusive digital ecosystems.</p>
+                    <p style="margin-top: 0.6rem;">© 2025 — All rights reserved</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-links-column">
+                        <h4>Explore</h4>
+                        <ul>
+                            <li><a href="#">About us</a></li>
+                            <li><a href="#">Our mission</a></li>
+                            <li><a href="#">Case studies</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links-column">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#">Design system</a></li>
+                            <li><a href="#">Media queries guide</a></li>
+                            <li><a href="#">Blog & stories</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links-column">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="#">Privacy</a></li>
+                            <li><a href="#">Terms of use</a></li>
+                            <li><a href="#">Accessibility</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Responsive layout crafted with HTML5, CSS3 & flexible media queries — fully functional on all screen sizes.</p>
+            </div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>
