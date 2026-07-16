@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Responsive Website | Bootstrap Grid + Media Queries | Sidebar & Main Content</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            background: #f0f2f5;
+            overflow-x: hidden;
+        }
+
+        /* ========== NAVBAR STYLES ========== */
+        .navbar-custom {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .nav-link {
+            color: #e0e0e0 !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #e94560 !important;
+            transform: translateY(-2px);
+        }
+
+        /* ========== SIDEBAR STYLES ========== */
+        .sidebar {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            position: sticky;
+            top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid #e94560;
+            display: inline-block;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: #4a5568;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .sidebar-menu a:hover {
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .sidebar-menu a i {
+            font-size: 1.2rem;
+        }
+
+        .sidebar-widget {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        /* ========== MAIN CONTENT STYLES ========== */
+        .main-content {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .hero-section h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 1rem;
+            border-left: 4px solid #e94560;
+        }
+
+        /* Card Styles */
+        .content-card {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            height: 100%;
+            border: 1px solid #e9ecef;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-color: #e94560;
+        }
+
+        .content-card i {
+            font-size: 2rem;
+            color: #e94560;
+            margin-bottom: 1rem;
+        }
+
+        .content-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Stats Section */
+        .stat-box {
+            text-align: center;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 16px;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: scale(1.05);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a2e;
+            color: #e0e0e0;
+            padding: 3rem 0 1.5rem;
+            margin-top: 3rem;
+        }
+
+        /* ========== CUSTOM MEDIA QUERIES (Beyond Bootstrap) ========== */
+        
+        /* Large Desktop Optimizations */
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1320px;
+            }
+            
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            
+            .stat-number {
+                font-size: 3rem;
+            }
+        }
+        
+        /* Tablet Landscape to Desktop */
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .sidebar {
+                padding: 1.2rem;
+            }
+            
+            .sidebar-menu a {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .hero-section h1 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        /* Tablet Portrait (Medium devices) */
+        @media (min-width: 768px) and (max-width: 991px) {
+            .sidebar {
+                margin-bottom: 1.5rem;
+                position: relative;
+                top: 0;
+            }
+            
+            .hero-section {
+                padding: 1.5rem;
+            }
+            
+            .hero-section h1 {
+                font-size: 1.6rem;
+            }
+            
+            .main-content {
+                padding: 1.5rem;
+            }
+            
+            .stat-number {
+                font-size: 1.8rem;
+            }
+        }
+        
+        /* Mobile Devices (Small screens) */
+        @media (max-width: 767px) {
+            .sidebar {
+                margin-bottom: 1.5rem;
+                position: relative;
+                top: 0;
+            }
+            
+            .main-content {
+                padding: 1.2rem;
+            }
+            
+            .hero-section {
+                padding: 1.2rem;
+                text-align: center;
+            }
+            
+            .hero-section h1 {
+                font-size: 1.4rem;
+            }
+            
+            .section-title {
+                font-size: 1.2rem;
+            }
+            
+            .stat-number {
+                font-size: 1.5rem;
+            }
+            
+            .content-card {
+                padding: 1rem;
+            }
+            
+            .footer {
+                text-align: center;
+            }
+        }
+        
+        /* Extra Small Devices */
+        @media (max-width: 480px) {
+            .hero-section h1 {
+                font-size: 1.2rem;
+            }
+            
+            .hero-section p {
+                font-size: 0.9rem;
+            }
+            
+            .sidebar-menu a {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.85rem;
+            }
+            
+            .stat-number {
+                font-size: 1.2rem;
+            }
+            
+            .stat-label {
+                font-size: 0.7rem;
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            border-radius: 5px;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .sidebar, .main-content {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        /* Card hover effects */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-bootstrap-fill me-2"></i>ResponsiveGrid
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Portfolio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container my-4 my-md-5">
+        <!-- Bootstrap Grid: Row with Sidebar + Main Content -->
+        <div class="row g-4">
+            
+            <!-- ========== SIDEBAR SECTION (Left Column) ========== -->
+            <div class="col-lg-4 col-md-12">
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">
+                        <i class="bi bi-grid-3x3-gap-fill me-2"></i>Dashboard
+                    </h3>
+                    
+                    <!-- Sidebar Navigation Menu -->
+                    <ul class="sidebar-menu">
+                        <li><a href="#"><i class="bi bi-house-door-fill"></i> Overview</a></li>
+                        <li><a href="#"><i class="bi bi-bar-chart-fill"></i> Analytics</a></li>
+                        <li><a href="#"><i class="bi bi-people-fill"></i> Users</a></li>
+                        <li><a href="#"><i class="bi bi-envelope-fill"></i> Messages</a></li>
+                        <li><a href="#"><i class="bi bi-gear-fill"></i> Settings</a></li>
+                        <li><a href="#"><i class="bi bi-bell-fill"></i> Notifications</a></li>
+                    </ul>
+                    
+                    <!-- Sidebar Widget -->
+                    <div class="sidebar-widget">
+                        <i class="bi bi-megaphone-fill" style="font-size: 2rem; color: #e94560;"></i>
+                        <h5 class="mt-2 mb-1">Pro Tip!</h5>
+                        <p class="small mb-0">Use Bootstrap Grid + custom media queries for ultimate responsive control</p>
+                    </div>
+                    
+                    <!-- Progress Stats -->
+                    <div class="mt-4">
+                        <h6 class="fw-bold mb-3">System Status</h6>
+                        <div class="mb-2 d-flex justify-content-between">
+                            <span>Storage</span>
+                            <span class="small">68%</span>
+                        </div>
+                        <div class="progress mb-3" style="height: 8px;">
+                            <div class="progress-bar bg-danger" style="width: 68%"></div>
+                        </div>
+                        <div class="mb-2 d-flex justify-content-between">
+                            <span>Bandwidth</span>
+                            <span class="small">45%</span>
+                        </div>
+                        <div class="progress mb-3" style="height: 8px;">
+                            <div class="progress-bar bg-warning" style="width: 45%"></div>
+                        </div>
+                        <div class="mb-2 d-flex justify-content-between">
+                            <span>CPU Usage</span>
+                            <span class="small">32%</span>
+                        </div>
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar bg-success" style="width: 32%"></div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+            
+            <!-- ========== MAIN CONTENT SECTION (Right Column) ========== -->
+            <div class="col-lg-8 col-md-12">
+                <main class="main-content">
+                    
+                    <!-- Hero Section -->
+                    <div class="hero-section">
+                        <h1>Welcome to Responsive Website</h1>
+                        <p class="mb-0">Built with Bootstrap Grid System + Custom Media Queries featuring dynamic sidebar and main content layout that adapts beautifully across all devices.</p>
+                    </div>
+                    
+                    <!-- Featured Content Section -->
+                    <div class="row g-4 mb-5">
+                        <div class="col-md-6">
+                            <div class="content-card hover-lift">
+                                <i class="bi bi-bootstrap-fill"></i>
+                                <h3>Bootstrap Grid</h3>
+                                <p class="small text-muted">12-column grid system with responsive breakpoints for seamless layouts across devices.</p>
+                                <a href="#" class="text-decoration-none fw-bold" style="color: #e94560;">Learn More →</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="content-card hover-lift">
+                                <i class="bi bi-phone-fill"></i>
+                                <h3>Media Queries</h3>
+                                <p class="small text-muted">Custom CSS media queries for fine-tuned control beyond Bootstrap defaults.</p>
+                                <a href="#" class="text-decoration-none fw-bold" style="color: #e94560;">Learn More →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Stats Section -->
+                    <h3 class="section-title">Key Statistics</h3>
+                    <div class="row g-3 mb-5">
+                        <div class="col-md-3 col-6">
+                            <div class="stat-box">
+                                <div class="stat-number">1.2k+</div>
+                                <div class="stat-label">Users</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="stat-box">
+                                <div class="stat-number">350+</div>
+                                <div class="stat-label">Projects</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="stat-box">
+                                <div class="stat-number">24/7</div>
+                                <div class="stat-label">Support</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="stat-box">
+                                <div class="stat-number">98%</div>
+                                <div class="stat-label">Satisfaction</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Activity Section -->
+                    <h3 class="section-title">Recent Activity</h3>
+                    <div class="list-group mb-4">
+                        <div class="list-group-item list-group-item-action d-flex align-items-center gap-3 border-0 bg-light mb-2 rounded">
+                            <i class="bi bi-person-plus-fill text-success fs-5"></i>
+                            <div class="flex-grow-1">
+                                <strong>New user registered</strong>
+                                <p class="small text-muted mb-0">John Doe joined the platform</p>
+                            </div>
+                            <small class="text-muted">2 min ago</small>
+                        </div>
+                        <div class="list-group-item list-group-item-action d-flex align-items-center gap-3 border-0 bg-light mb-2 rounded">
+                            <i class="bi bi-file-post-fill text-primary fs-5"></i>
+                            <div class="flex-grow-1">
+                                <strong>New content published</strong>
+                                <p class="small text-muted mb-0">Responsive design tutorial</p>
+                            </div>
+                            <small class="text-muted">1 hour ago</small>
+                        </div>
+                        <div class="list-group-item list-group-item-action d-flex align-items-center gap-3 border-0 bg-light mb-2 rounded">
+                            <i class="bi bi-star-fill text-warning fs-5"></i>
+                            <div class="flex-grow-1">
+                                <strong>Achievement unlocked</strong>
+                                <p class="small text-muted mb-0">1000th registered user milestone</p>
+                            </div>
+                            <small class="text-muted">3 hours ago</small>
+                        </div>
+                    </div>
+                    
+                    <!-- Content Grid Demo -->
+                    <h3 class="section-title">Latest Articles</h3>
+                    <div class="row g-4">
+                        <div class="col-md-4 col-sm-6">
+                            <div class="content-card">
+                                <img src="https://picsum.photos/id/20/300/150" alt="Article" class="img-fluid rounded mb-3" style="width: 100%; height: 120px; object-fit: cover;">
+                                <h6 class="fw-bold">Understanding Bootstrap Grid</h6>
+                                <p class="small text-muted">Learn how to leverage the power of 12-column grid system...</p>
+                                <a href="#" class="text-decoration-none small fw-bold">Read more →</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="content-card">
+                                <img src="https://picsum.photos/id/26/300/150" alt="Article" class="img-fluid rounded mb-3" style="width: 100%; height: 120px; object-fit: cover;">
+                                <h6 class="fw-bold">Media Queries Mastery</h6>
+                                <p class="small text-muted">Custom breakpoints for pixel-perfect responsive design...</p>
+                                <a href="#" class="text-decoration-none small fw-bold">Read more →</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="content-card">
+                                <img src="https://picsum.photos/id/1/300/150" alt="Article" class="img-fluid rounded mb-3" style="width: 100%; height: 120px; object-fit: cover;">
+                                <h6 class="fw-bold">Sidebar Layout Best Practices</h6>
+                                <p class="small text-muted">Optimize your sidebar + main content for all devices...</p>
+                                <a href="#" class="text-decoration-none small fw-bold">Read more →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial Section -->
+                    <div class="alert alert-light border mt-4 p-4 rounded-4">
+                        <div class="d-flex gap-3 align-items-start">
+                            <i class="bi bi-quote fs-1" style="color: #e94560;"></i>
+                            <div>
+                                <p class="mb-2 fst-italic">"This responsive layout using Bootstrap Grid + custom media queries perfectly demonstrates how to create modern, adaptive websites that look great on any device."</p>
+                                <strong>— Alex Morgan</strong>
+                                <p class="small text-muted mb-0">Senior Web Developer</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </main>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ========== FOOTER SECTION ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5 class="fw-bold mb-3" style="color: #e94560;">ResponsiveGrid</h5>
+                    <p class="small">Building modern, responsive websites with Bootstrap 5 Grid system and custom media queries for optimal user experience across all devices.</p>
+                    <div class="mt-3">
+                        <a href="#" class="text-white me-3 opacity-75"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="text-white me-3 opacity-75"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white me-3 opacity-75"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="text-white opacity-75"><i class="bi bi-github"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <h6 class="fw-bold mb-3">Product</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Features</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Pricing</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Demo</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <h6 class="fw-bold mb-3">Company</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">About</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Blog</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="fw-bold mb-3">Newsletter</h6>
+                    <p class="small">Subscribe to get updates on responsive design tips</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control form-control-sm" placeholder="Your email">
+                        <button class="btn btn-danger btn-sm" type="button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 opacity-25">
+            <div class="text-center small opacity-75">
+                <p class="mb-0">&copy; 2025 ResponsiveGrid. Built with Bootstrap Grid + Custom Media Queries. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Additional interactive script for responsive testing -->
+    <script>
+        // Log responsive breakpoint for debugging
+        function logBreakpoint() {
+            const width = window.innerWidth;
+            let breakpoint = '';
+            if (width < 576) breakpoint = 'Extra Small (xs)';
+            else if (width < 768) breakpoint = 'Small (sm)';
+            else if (width < 992) breakpoint = 'Medium (md)';
+            else if (width < 1200) breakpoint = 'Large (lg)';
+            else if (width < 1400) breakpoint = 'Extra Large (xl)';
+            else breakpoint = 'XXL (xxl)';
+            
+            console.log(`Current viewport: ${width}px - ${breakpoint}`);
+        }
+        
+        window.addEventListener('resize', () => {
+            logBreakpoint();
+        });
+        
+        logBreakpoint();
+        
+        // Add smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
